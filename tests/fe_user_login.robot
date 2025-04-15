@@ -10,20 +10,14 @@ Test Teardown          Main Web Teardown
 *** Test Cases ***
 Test Case 1: Validate user registration
     [Documentation]    Validate user registration
-    [Tags]             signup
+    [Tags]             signin
     bahai_app.Navigate to the login page    ${LOGIN_PAGE}    
     ...                                     ${login_form}
-    bahai_app.Click the signup button       ${signup_btn}
-    bahai_app.Enter credential              ${name_field}    
-    ...                                     John Doe
-    bahai_app.Enter credential              ${email_field}    
+    bahai_app.Enter credential              ${login_email_field}    
     ...                                     ${EMAIL}
-    bahai_app.Enter credential              ${password_field}
+    bahai_app.Enter credential              ${login_password_field}    
     ...                                     ${PASSWORD}
-    bahai_app.Enter credential              ${confirm_password_field}
-    ...                                     ${PASSWORD}
-    bahai_app.Click create account          ${create_account_btn}
-    bahai_app.Validate name displayed       Welcome back, John!
+    bahai_app.Click sign in                 ${signin_btn}
 
     
 

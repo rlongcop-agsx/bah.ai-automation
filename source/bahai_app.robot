@@ -30,3 +30,8 @@ Click create account
 Validate name displayed
     [Arguments]                          ${expected_text}    
     signup_page.Validate text displayed in page    ${expected_text}    
+
+Click sign in
+    [Arguments]                          ${locator}
+    login_page.Verify page loaded        ${locator}
+    login_page.Click button              ${locator}
