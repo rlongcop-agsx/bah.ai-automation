@@ -1,7 +1,7 @@
-## Bah.Ai Automation
+# Bah.Ai Automation
 This automation script is specifically designed for the Bah.Ai project and should be used only within this context.
 
-# 📄 Test Status Reports
+## 📄 Test Status Reports
 - [Logs: View Logs](https://rlongcop-agsx.github.io/bah.ai-automation/log.html)
 - [Report: View Report](https://rlongcop-agsx.github.io/bah.ai-automation/report.html)
 
