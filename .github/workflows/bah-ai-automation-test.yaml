@@ -32,7 +32,7 @@ jobs:
         robot -d logs \
         -v BASE_URL:${{ secrets.BASE_URL }} \
         -v BROWSER:headlesschrome \
-        tests/fe_user_registration.robot
+        tests
 
     - name: Archive test report
       if: always()
