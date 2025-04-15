@@ -1,0 +1,51 @@
+name: Robot Framework Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  run_automation_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Kill existing Chrome instances
+      run: pkill -9 chrome || true
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies from requirements.txt
+      run: pip install -r requirements.txt
+
+    - name: Run Robot Framework tests
+      shell: bash
+      run: |
+        robot -d logs \
+        -v BASE_URL:${{ secrets.BASE_URL }} \
+        -v BROWSER:headlesschrome \
+        tests/fe_user_registration.robot
+
+    - name: Archive test report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-report
+        path: logs/
+
+    - name: Publish test results as a GitHub Pages site
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.GH_PAGES_TOKEN }}
+        external_repository: ${{ github.repository }}
+        publish_dir: ./logs/
+        publish_branch: gh-pages 
+        commit_message: "Publish Bah.Ai Report"
