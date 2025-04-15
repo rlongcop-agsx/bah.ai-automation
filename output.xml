@@ -1,263 +1,263 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.2.2 (Python 3.12.10 on linux)" generated="2025-04-15T00:33:17.350855" rpa="false" schemaversion="5">
+<robot generator="Robot 7.2.2 (Python 3.12.9 on linux)" generated="2025-04-15T00:42:43.769774" rpa="false" schemaversion="5">
 <suite id="s1" name="Fe User Registration" source="/home/runner/work/bah.ai-automation/bah.ai-automation/tests/fe_user_registration.robot">
 <test id="s1-t1" name="Test Case 1: Validate user registration" line="11">
 <kw name="Main Web Setup" owner="common" type="SETUP">
 <kw name="Empty Directory" owner="OperatingSystem">
-<msg time="2025-04-15T00:33:17.591160" level="INFO" html="true">Listing contents of directory '&lt;a href="file:///home/runner/work/bah.ai-automation/bah.ai-automation/logs/screenshots"&gt;/home/runner/work/bah.ai-automation/bah.ai-automation/logs/screenshots&lt;/a&gt;'.</msg>
-<msg time="2025-04-15T00:33:17.591420" level="INFO" html="true">Emptied directory '&lt;a href="file:///home/runner/work/bah.ai-automation/bah.ai-automation/logs/screenshots"&gt;/home/runner/work/bah.ai-automation/bah.ai-automation/logs/screenshots&lt;/a&gt;'.</msg>
+<msg time="2025-04-15T00:42:43.940681" level="INFO" html="true">Listing contents of directory '&lt;a href="file:///home/runner/work/bah.ai-automation/bah.ai-automation/logs/screenshots"&gt;/home/runner/work/bah.ai-automation/bah.ai-automation/logs/screenshots&lt;/a&gt;'.</msg>
+<msg time="2025-04-15T00:42:43.940930" level="INFO" html="true">Emptied directory '&lt;a href="file:///home/runner/work/bah.ai-automation/bah.ai-automation/logs/screenshots"&gt;/home/runner/work/bah.ai-automation/bah.ai-automation/logs/screenshots&lt;/a&gt;'.</msg>
 <arg>logs/screenshots</arg>
 <doc>Deletes all the content from the given directory.</doc>
-<status status="PASS" start="2025-04-15T00:33:17.590989" elapsed="0.000503"/>
+<status status="PASS" start="2025-04-15T00:42:43.940542" elapsed="0.000455"/>
 </kw>
 <kw name="Set Screenshot Directory" owner="SeleniumLibrary">
 <arg>logs/screenshots</arg>
 <doc>Sets the directory for captured screenshots.</doc>
-<status status="PASS" start="2025-04-15T00:33:17.591658" elapsed="0.000177"/>
+<status status="PASS" start="2025-04-15T00:42:43.941149" elapsed="0.000206"/>
 </kw>
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:17.592176" level="INFO">Opening browser 'headlesschrome' to base url 'about:blank'.</msg>
+<msg time="2025-04-15T00:42:43.941655" level="INFO">Opening browser 'headlesschrome' to base url 'about:blank'.</msg>
 <arg>about:blank</arg>
 <arg>${browser}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-04-15T00:33:17.591978" elapsed="10.832492"/>
+<status status="PASS" start="2025-04-15T00:42:43.941496" elapsed="1.498810"/>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2025-04-15T00:33:28.424707" elapsed="0.013566"/>
+<status status="PASS" start="2025-04-15T00:42:45.440524" elapsed="0.013444"/>
 </kw>
 <arg>${BROWSER}</arg>
 <doc>Main web setup</doc>
-<status status="PASS" start="2025-04-15T00:33:17.590195" elapsed="10.848197"/>
+<status status="PASS" start="2025-04-15T00:42:43.939731" elapsed="1.514336"/>
 </kw>
 <kw name="Navigate to the login page" owner="bahai_app">
 <kw name="Navigate to login page" owner="login_page">
 <kw name="Go To" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:28.439488" level="INFO">Opening url 'https://v0-real-estate-marketplace-necizi.vercel.app/login'</msg>
+<msg time="2025-04-15T00:42:45.455081" level="INFO">Opening url 'https://v0-real-estate-marketplace-necizi.vercel.app/login'</msg>
 <arg>${url}</arg>
 <doc>Navigates the current browser window to the provided ``url``.</doc>
-<status status="PASS" start="2025-04-15T00:33:28.439353" elapsed="0.833235"/>
+<status status="PASS" start="2025-04-15T00:42:45.454956" elapsed="0.192866"/>
 </kw>
 <arg>${url}</arg>
-<status status="PASS" start="2025-04-15T00:33:28.439084" elapsed="0.833696"/>
+<status status="PASS" start="2025-04-15T00:42:45.454712" elapsed="0.193297"/>
 </kw>
 <kw name="Verify page loaded" owner="login_page">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>${locator}</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.273511" elapsed="0.169260"/>
+<status status="PASS" start="2025-04-15T00:42:45.648867" elapsed="0.110715"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.273110" elapsed="0.169795"/>
+<status status="PASS" start="2025-04-15T00:42:45.648347" elapsed="0.111357"/>
 </kw>
 <arg>${LOGIN_PAGE}</arg>
 <arg>${login_form}</arg>
-<status status="PASS" start="2025-04-15T00:33:28.438661" elapsed="1.004308"/>
+<status status="PASS" start="2025-04-15T00:42:45.454334" elapsed="0.305436"/>
 </kw>
 <kw name="Click the signup button" owner="bahai_app">
 <kw name="Verify page loaded" owner="login_page">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>${locator}</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.443987" elapsed="0.027778"/>
+<status status="PASS" start="2025-04-15T00:42:45.760604" elapsed="0.014161"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.443575" elapsed="0.028303"/>
+<status status="PASS" start="2025-04-15T00:42:45.760347" elapsed="0.014498"/>
 </kw>
 <kw name="Click button" owner="login_page">
 <kw name="Click Element" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:29.472621" level="INFO">Clicking element 'xpath=//*[text()='Sign up']'.</msg>
+<msg time="2025-04-15T00:42:45.775435" level="INFO">Clicking element 'xpath=//*[text()='Sign up']'.</msg>
 <arg>${button}</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.472426" elapsed="0.146697"/>
+<status status="PASS" start="2025-04-15T00:42:45.775267" elapsed="0.075146"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.472091" elapsed="0.147212"/>
+<status status="PASS" start="2025-04-15T00:42:45.774988" elapsed="0.075559"/>
 </kw>
 <arg>${signup_btn}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.443227" elapsed="0.176151"/>
+<status status="PASS" start="2025-04-15T00:42:45.759982" elapsed="0.090718"/>
 </kw>
 <kw name="Enter credential" owner="bahai_app">
 <kw name="Verify element visible" owner="signup_page">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>${locator}</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.620336" elapsed="0.034748"/>
+<status status="PASS" start="2025-04-15T00:42:45.851869" elapsed="0.032081"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.620060" elapsed="0.035166"/>
+<status status="PASS" start="2025-04-15T00:42:45.851552" elapsed="0.032531"/>
 </kw>
 <kw name="Enter credential" owner="signup_page">
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:29.656281" level="INFO">Typing text 'John Doe' into text field 'id=name'.</msg>
+<msg time="2025-04-15T00:42:45.884992" level="INFO">Typing text 'John Doe' into text field 'id=name'.</msg>
 <arg>${locator}</arg>
 <arg>${credential}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.656016" elapsed="0.162688"/>
+<status status="PASS" start="2025-04-15T00:42:45.884742" elapsed="0.099497"/>
 </kw>
 <arg>${credential}</arg>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.655511" elapsed="0.163346"/>
+<status status="PASS" start="2025-04-15T00:42:45.884338" elapsed="0.100057"/>
 </kw>
 <arg>${name_field}</arg>
 <arg>John Doe</arg>
-<status status="PASS" start="2025-04-15T00:33:29.619591" elapsed="0.199349"/>
+<status status="PASS" start="2025-04-15T00:42:45.851009" elapsed="0.133480"/>
 </kw>
 <kw name="Enter credential" owner="bahai_app">
 <kw name="Verify element visible" owner="signup_page">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>${locator}</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.819841" elapsed="0.019800"/>
+<status status="PASS" start="2025-04-15T00:42:45.985428" elapsed="0.013632"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.819563" elapsed="0.020163"/>
+<status status="PASS" start="2025-04-15T00:42:45.985084" elapsed="0.014063"/>
 </kw>
 <kw name="Enter credential" owner="signup_page">
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:29.840418" level="INFO">Typing text 'sample@email.com' into text field 'id=email'.</msg>
+<msg time="2025-04-15T00:42:45.999862" level="INFO">Typing text 'sample@email.com' into text field 'id=email'.</msg>
 <arg>${locator}</arg>
 <arg>${credential}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.840212" elapsed="0.080559"/>
+<status status="PASS" start="2025-04-15T00:42:45.999653" elapsed="0.071837"/>
 </kw>
 <arg>${credential}</arg>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.839873" elapsed="0.081028"/>
+<status status="PASS" start="2025-04-15T00:42:45.999329" elapsed="0.072285"/>
 </kw>
 <arg>${email_field}</arg>
 <arg>${EMAIL}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.819183" elapsed="0.101788"/>
+<status status="PASS" start="2025-04-15T00:42:45.984703" elapsed="0.086981"/>
 </kw>
 <kw name="Enter credential" owner="bahai_app">
 <kw name="Verify element visible" owner="signup_page">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>${locator}</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.921887" elapsed="0.013336"/>
+<status status="PASS" start="2025-04-15T00:42:46.072562" elapsed="0.013303"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.921618" elapsed="0.013686"/>
+<status status="PASS" start="2025-04-15T00:42:46.072299" elapsed="0.013647"/>
 </kw>
 <kw name="Enter credential" owner="signup_page">
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:29.935965" level="INFO">Typing text 'Password@123' into text field 'id=password'.</msg>
+<msg time="2025-04-15T00:42:46.086640" level="INFO">Typing text 'Password@123' into text field 'id=password'.</msg>
 <arg>${locator}</arg>
 <arg>${credential}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.935770" elapsed="0.061583"/>
+<status status="PASS" start="2025-04-15T00:42:46.086436" elapsed="0.059582"/>
 </kw>
 <arg>${credential}</arg>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.935462" elapsed="0.062016"/>
+<status status="PASS" start="2025-04-15T00:42:46.086098" elapsed="0.060037"/>
 </kw>
 <arg>${password_field}</arg>
 <arg>${PASSWORD}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.921221" elapsed="0.076324"/>
+<status status="PASS" start="2025-04-15T00:42:46.071894" elapsed="0.074342"/>
 </kw>
 <kw name="Enter credential" owner="bahai_app">
 <kw name="Verify element visible" owner="signup_page">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>${locator}</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-04-15T00:33:29.998597" elapsed="0.013429"/>
+<status status="PASS" start="2025-04-15T00:42:46.147054" elapsed="0.012892"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.998261" elapsed="0.013885"/>
+<status status="PASS" start="2025-04-15T00:42:46.146807" elapsed="0.013217"/>
 </kw>
 <kw name="Enter credential" owner="signup_page">
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:30.012845" level="INFO">Typing text 'Password@123' into text field 'id=confirmPassword'.</msg>
+<msg time="2025-04-15T00:42:46.160683" level="INFO">Typing text 'Password@123' into text field 'id=confirmPassword'.</msg>
 <arg>${locator}</arg>
 <arg>${credential}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-15T00:33:30.012632" elapsed="0.059877"/>
+<status status="PASS" start="2025-04-15T00:42:46.160496" elapsed="0.058199"/>
 </kw>
 <arg>${credential}</arg>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:30.012310" elapsed="0.060320"/>
+<status status="PASS" start="2025-04-15T00:42:46.160187" elapsed="0.058656"/>
 </kw>
 <arg>${confirm_password_field}</arg>
 <arg>${PASSWORD}</arg>
-<status status="PASS" start="2025-04-15T00:33:29.997777" elapsed="0.074921"/>
+<status status="PASS" start="2025-04-15T00:42:46.146447" elapsed="0.072498"/>
 </kw>
 <kw name="Click create account" owner="bahai_app">
 <kw name="Verify element visible" owner="signup_page">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>${locator}</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-04-15T00:33:30.073557" elapsed="0.013161"/>
+<status status="PASS" start="2025-04-15T00:42:46.219934" elapsed="0.013181"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:30.073296" elapsed="0.013507"/>
+<status status="PASS" start="2025-04-15T00:42:46.219676" elapsed="0.013545"/>
 </kw>
 <kw name="Click button" owner="signup_page">
 <kw name="Click Element" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:30.087443" level="INFO">Clicking element 'xpath=//*[text()='Create Account']'.</msg>
+<msg time="2025-04-15T00:42:46.233831" level="INFO">Clicking element 'xpath=//*[text()='Create Account']'.</msg>
 <arg>${button}</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-15T00:33:30.087260" elapsed="0.220019"/>
+<status status="PASS" start="2025-04-15T00:42:46.233643" elapsed="0.079419"/>
 </kw>
 <arg>${locator}</arg>
-<status status="PASS" start="2025-04-15T00:33:30.086949" elapsed="0.220485"/>
+<status status="PASS" start="2025-04-15T00:42:46.233377" elapsed="0.079830"/>
 </kw>
 <arg>${create_account_btn}</arg>
-<status status="PASS" start="2025-04-15T00:33:30.072913" elapsed="0.234596"/>
+<status status="PASS" start="2025-04-15T00:42:46.219241" elapsed="0.094056"/>
 </kw>
 <kw name="Validate name displayed" owner="bahai_app">
 <kw name="Validate text displayed in page" owner="signup_page">
 <kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
 <kw name="Page Should Contain" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:30.461146" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/selenium-screenshot-1.png"&gt;&lt;img src="screenshots/selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg time="2025-04-15T00:33:30.461335" level="FAIL">Page should have contained text 'Welcome back, John!' but did not.</msg>
+<msg time="2025-04-15T00:42:46.447023" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/selenium-screenshot-1.png"&gt;&lt;img src="screenshots/selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-04-15T00:42:46.447231" level="FAIL">Page should have contained text 'Welcome back, John!' but did not.</msg>
 <arg>${expected_text}</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="FAIL" start="2025-04-15T00:33:30.308686" elapsed="0.153570">Page should have contained text 'Welcome back, John!' but did not.</status>
+<status status="FAIL" start="2025-04-15T00:42:46.314363" elapsed="0.133724">Page should have contained text 'Welcome back, John!' but did not.</status>
 </kw>
 <kw name="Page Should Contain" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:31.611438" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/selenium-screenshot-2.png"&gt;&lt;img src="screenshots/selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg time="2025-04-15T00:33:31.611608" level="FAIL">Page should have contained text 'Welcome back, John!' but did not.</msg>
+<msg time="2025-04-15T00:42:47.539279" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/selenium-screenshot-2.png"&gt;&lt;img src="screenshots/selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-04-15T00:42:47.539438" level="FAIL">Page should have contained text 'Welcome back, John!' but did not.</msg>
 <arg>${expected_text}</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="FAIL" start="2025-04-15T00:33:31.462655" elapsed="0.149281">Page should have contained text 'Welcome back, John!' but did not.</status>
+<status status="FAIL" start="2025-04-15T00:42:47.448507" elapsed="0.091237">Page should have contained text 'Welcome back, John!' but did not.</status>
 </kw>
 <kw name="Page Should Contain" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:32.620419" level="INFO">Current page contains text 'Welcome back, John!'.</msg>
+<msg time="2025-04-15T00:42:48.547755" level="INFO">Current page contains text 'Welcome back, John!'.</msg>
 <arg>${expected_text}</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="PASS" start="2025-04-15T00:33:32.612300" elapsed="0.008222"/>
+<status status="PASS" start="2025-04-15T00:42:48.540130" elapsed="0.007699"/>
 </kw>
 <arg>10</arg>
 <arg>1</arg>
 <arg>Page Should Contain</arg>
 <arg>${expected_text}</arg>
 <doc>Runs the specified keyword and retries if it fails.</doc>
-<status status="PASS" start="2025-04-15T00:33:30.308414" elapsed="2.312204"/>
+<status status="PASS" start="2025-04-15T00:42:46.314111" elapsed="2.233791"/>
 </kw>
 <arg>${expected_text}</arg>
-<status status="PASS" start="2025-04-15T00:33:30.308103" elapsed="2.312587"/>
+<status status="PASS" start="2025-04-15T00:42:46.313810" elapsed="2.234161"/>
 </kw>
 <arg>Welcome back, John!</arg>
-<status status="PASS" start="2025-04-15T00:33:30.307729" elapsed="2.313026"/>
+<status status="PASS" start="2025-04-15T00:42:46.313499" elapsed="2.234524"/>
 </kw>
 <kw name="Main Web Teardown" owner="common" type="TEARDOWN">
 <kw name="Capture Page Screenshot" owner="SeleniumLibrary">
-<msg time="2025-04-15T00:33:32.727060" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/selenium-screenshot-3.png"&gt;&lt;img src="screenshots/selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-04-15T00:42:48.643745" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/selenium-screenshot-3.png"&gt;&lt;img src="screenshots/selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
 <doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
-<status status="PASS" start="2025-04-15T00:33:32.621348" elapsed="0.105824"/>
+<status status="PASS" start="2025-04-15T00:42:48.548560" elapsed="0.095292"/>
 </kw>
 <kw name="Close All Browsers" owner="SeleniumLibrary">
 <doc>Closes all open browsers and resets the browser cache.</doc>
-<status status="PASS" start="2025-04-15T00:33:32.727356" elapsed="0.081095"/>
+<status status="PASS" start="2025-04-15T00:42:48.644028" elapsed="0.075842"/>
 </kw>
 <doc>Main web teardown</doc>
-<status status="PASS" start="2025-04-15T00:33:32.621010" elapsed="0.187553"/>
+<status status="PASS" start="2025-04-15T00:42:48.548296" elapsed="0.171680"/>
 </kw>
 <doc>Validate user registration</doc>
 <tag>smoke</tag>
-<status status="PASS" start="2025-04-15T00:33:17.589372" elapsed="15.219252"/>
+<status status="PASS" start="2025-04-15T00:42:43.938949" elapsed="4.781085"/>
 </test>
-<status status="PASS" start="2025-04-15T00:33:17.351734" elapsed="15.457431"/>
+<status status="PASS" start="2025-04-15T00:42:43.770661" elapsed="4.949931"/>
 </suite>
 <statistics>
 <total>
