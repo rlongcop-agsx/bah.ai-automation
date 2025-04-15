@@ -12,3 +12,5 @@ ${email_field}=                id=email
 ${password_field}=             id=password
 ${confirm_password_field}=     id=confirmPassword
 ${create_account_btn}=         xpath=//*[text()='Create Account']
+${profile_icon}=               xpath=//div[text()='S']
+${logout_btn}=                xpath=//*[text()='Log out']

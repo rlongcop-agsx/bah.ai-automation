@@ -25,7 +25,7 @@ Enter credential
 Click create account
     [Arguments]                          ${locator}
     signup_page.Verify element visible   ${locator}
-    signup_page.Click button            ${locator}
+    signup_page.Click button             ${locator}
 
 Validate name displayed
     [Arguments]                          ${expected_text}    
@@ -35,3 +35,12 @@ Click sign in
     [Arguments]                          ${locator}
     login_page.Verify page loaded        ${locator}
     login_page.Click button              ${locator}
+
+Click button
+    [Arguments]                          ${locator}
+    signup_page.Verify element visible   ${locator}
+    signup_page.Click button             ${locator}
+
+Validate text displayed
+    [Arguments]                          ${expected_text}    
+    signup_page.Validate text displayed in page    ${expected_text}

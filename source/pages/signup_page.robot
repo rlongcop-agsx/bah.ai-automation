@@ -14,7 +14,7 @@ Enter credential
 
 Click button
     [Arguments]                         ${button}
-    Click Element                       ${button}
+    Wait Until Keyword Succeeds    10    1    Click Element                       ${button}
 
 Validate text displayed in page
     [Arguments]                          ${expected_text}
