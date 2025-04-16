@@ -80,10 +80,10 @@
   </div>
 
   <div class="report-link" id="report-link">
-    <a href="logs/chrome/report.html" target="_blank">Open Full Report</a>
+    <a href="chrome/report.html" target="_blank">Open Full Report</a>
   </div>
 
-  <iframe id="report-frame" src="logs/chrome/report.html" frameborder="0"></iframe>
+  <iframe id="report-frame" src="chrome/report.html" frameborder="0"></iframe>
 
   <script>
     const browserSelect = document.getElementById('browser-select');
@@ -92,7 +92,7 @@
 
     browserSelect.addEventListener('change', function () {
       const browser = this.value;
-      const url = `logs/${browser}/report.html`;
+      const url = `${browser}/report.html`;
       reportFrame.style.opacity = 0;
       setTimeout(() => {
         reportFrame.src = url;
