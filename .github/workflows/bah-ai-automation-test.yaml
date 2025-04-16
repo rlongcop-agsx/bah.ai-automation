@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: python-env
-        path: .  # Optional: if you want to share anything else (e.g., .venv)
+        path: .
 
   run_headless_browsers:
     needs: install_dependencies
@@ -46,17 +46,27 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
-    - name: Run headless Chrome and Firefox tests
+    - name: Run headless Chrome tests
       run: |
         robot -d logs/chrome -v BASE_URL:${{ secrets.BASE_URL }} -v BROWSER:headlesschrome tests
-        robot -d logs/firefox -v BASE_URL:${{ secrets.BASE_URL }} -v BROWSER:headlessfirefox tests
 
-    - name: Upload logs
+    - name: Upload Chrome logs
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: headless-test-report
-        path: logs/
+        name: chrome
+        path: logs/chrome/
+
+    - name: Run headless Firefox tests
+      run: |
+        robot -d logs/firefox -v BASE_URL:${{ secrets.BASE_URL }} -v BROWSER:headlessfirefox tests
+
+    - name: Upload Firefox logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: firefox
+        path: logs/firefox/
 
   run_safari_tests:
     needs: install_dependencies
@@ -81,22 +91,35 @@ jobs:
       run: |
         robot -d logs/safari -v BASE_URL:${{ secrets.BASE_URL }} -v BROWSER:safari tests
 
-    - name: Upload logs
+    - name: Upload Safari logs
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: safari-test-report
-        path: logs/
+        name: safari
+        path: logs/safari/
 
   publish_report:
     needs: [run_headless_browsers, run_safari_tests]
     runs-on: ubuntu-latest
 
     steps:
-    - name: Download all logs
+    - name: Download Chrome logs
       uses: actions/download-artifact@v4
       with:
-        path: logs
+        name: chrome
+        path: logs/chrome
+
+    - name: Download Firefox logs
+      uses: actions/download-artifact@v4
+      with:
+        name: firefox
+        path: logs/firefox
+
+    - name: Download Safari logs
+      uses: actions/download-artifact@v4
+      with:
+        name: safari
+        path: logs/safari
 
     - name: Publish test results as a GitHub Pages site
       uses: peaceiris/actions-gh-pages@v3
