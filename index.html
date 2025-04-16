@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css">
+  <title>Bah.Ai | Test</title>
+</head>
+<body>
+  <h1>BAH.AI TEST STATUS REPORT</h1>
+
+  <div class="selector">
+    <label for="browser-select">Select a browser report:</label>
+    <select id="browser-select">
+      <option value="chrome">Chrome</option>
+      <option value="firefox">Firefox</option>
+      <option value="safari">Safari</option>
+    </select>
+  </div>
+
+  <div class="report-link" id="report-link">
+    <a href="chrome/report.html" target="_blank">Open Full Report</a>
+  </div>
+
+  <iframe id="report-frame" src="chrome/report.html" frameborder="0"></iframe>
+
+  <script>
+    const browserSelect = document.getElementById('browser-select');
+    const reportFrame = document.getElementById('report-frame');
+    const reportLink = document.getElementById('report-link').querySelector('a');
+
+    browserSelect.addEventListener('change', function () {
+      const browser = this.value;
+      const url = `${browser}/report.html`;
+      reportFrame.style.opacity = 0;
+      setTimeout(() => {
+        reportFrame.src = url;
+        reportLink.href = url;
+        reportLink.textContent = `Open Full Report (${browser.charAt(0).toUpperCase() + browser.slice(1)})`;
+        reportFrame.style.opacity = 1;
+      }, 150);
+    });
+  </script>
+</body>
+</html>
