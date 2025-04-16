@@ -123,19 +123,19 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: chrome
-        path: logs/chrome
+        path: logs/chrome/
 
     - name: Download Firefox logs
       uses: actions/download-artifact@v4
       with:
         name: firefox
-        path: logs/firefox
+        path: logs/firefox/
 
     - name: Download Safari logs
       uses: actions/download-artifact@v4
       with:
         name: safari
-        path: logs/safari
+        path: logs/safari/
 
     - name: Publish test results as a GitHub Pages site
       uses: peaceiris/actions-gh-pages@v3
