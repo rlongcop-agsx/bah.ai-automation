@@ -7,6 +7,10 @@ Test Setup             Main Web Setup
 ...                    ${BROWSER}
 Test Teardown          Main Web Teardown
 
+# robot -d logs -v BROWSER:chrome tests
+# robot -d logs -v BROWSER:firefox tests
+# robot -d logs -v BROWSER:edge tests
+
 *** Test Cases ***
 Test Case 1: Validate user registration
     [Documentation]    Validate user registration

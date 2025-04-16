@@ -8,13 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  run_automation_test:
+  install_dependencies:
     runs-on: ubuntu-latest
-
+    outputs:
+      cache-hit: ${{ steps.cache.outputs.cache-hit }}
     steps:
-    - name: Kill existing Chrome instances
-      run: pkill -9 chrome || true
-
     - name: Checkout repository
       uses: actions/checkout@v4
 
@@ -26,20 +24,79 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
-    - name: Run Robot Framework tests
-      shell: bash
-      run: |
-        robot -d logs \
-        -v BASE_URL:${{ secrets.BASE_URL }} \
-        -v BROWSER:headlesschrome \
-        tests
+    - name: Upload installed environment
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-env
+        path: .  # Optional: if you want to share anything else (e.g., .venv)
 
-    - name: Archive test report
+  run_headless_browsers:
+    needs: install_dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies from requirements.txt
+      run: pip install -r requirements.txt
+
+    - name: Run headless Chrome and Firefox tests
+      run: |
+        robot -d logs/chrome -v BASE_URL:${{ secrets.BASE_URL }} -v BROWSER:headlesschrome tests
+        robot -d logs/firefox -v BASE_URL:${{ secrets.BASE_URL }} -v BROWSER:headlessfirefox tests
+
+    - name: Upload logs
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: test-report
+        name: headless-test-report
         path: logs/
+
+  run_safari_tests:
+    needs: install_dependencies
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Enable safaridriver
+      run: sudo safaridriver --enable
+
+    - name: Install dependencies from requirements.txt
+      run: pip install -r requirements.txt
+
+    - name: Run Safari tests
+      run: |
+        robot -d logs/safari -v BASE_URL:${{ secrets.BASE_URL }} -v BROWSER:safari tests
+
+    - name: Upload logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: safari-test-report
+        path: logs/
+
+  publish_report:
+    needs: [run_headless_browsers, run_safari_tests]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download all logs
+      uses: actions/download-artifact@v4
+      with:
+        path: logs
 
     - name: Publish test results as a GitHub Pages site
       uses: peaceiris/actions-gh-pages@v3
@@ -47,5 +104,5 @@ jobs:
         personal_token: ${{ secrets.GH_PAGES_TOKEN }}
         external_repository: ${{ github.repository }}
         publish_dir: ./logs/
-        publish_branch: gh-pages 
+        publish_branch: gh-pages
         commit_message: "Publish Bah.Ai Report"

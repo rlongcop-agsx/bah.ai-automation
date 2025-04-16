@@ -9,7 +9,6 @@ Main Web Setup
     [Documentation]             Main web setup
     [Arguments]                 ${browser}
     Empty Directory             logs/screenshots
-
     SeleniumLibrary.Set Screenshot Directory    logs/screenshots
     Open Browser                about:blank    
     ...                         ${browser}
