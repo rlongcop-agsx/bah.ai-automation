@@ -30,7 +30,7 @@ jobs:
         name: python-env
         path: .
 
-  run_headless_browsers:
+  run_chrome_tests:
     needs: install_dependencies
     runs-on: ubuntu-latest
 
@@ -56,6 +56,22 @@ jobs:
       with:
         name: chrome
         path: logs/chrome/
+  
+  run_firefox_tests:
+    needs: install_dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies from requirements.txt
+      run: pip install -r requirements.txt
 
     - name: Run headless Firefox tests
       run: |
@@ -99,7 +115,7 @@ jobs:
         path: logs/safari/
 
   publish_report:
-    needs: [run_headless_browsers, run_safari_tests]
+    needs: [run_chrome_tests, run_firefox_tests, run_safari_tests]
     runs-on: ubuntu-latest
 
     steps:
