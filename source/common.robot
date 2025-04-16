@@ -8,6 +8,7 @@ Library           Collections
 Main Web Setup
     [Documentation]             Main web setup
     [Arguments]                 ${browser}
+    Create Directory   logs/${browser}/screenshots
     Empty Directory             logs/${browser}/screenshots
     SeleniumLibrary.Set Screenshot Directory    logs/${browser}/screenshots
     Open Browser                about:blank    
