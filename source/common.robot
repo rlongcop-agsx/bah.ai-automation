@@ -6,13 +6,22 @@ Library           Collections
 
 *** Keywords ***
 Main Web Setup
-    [Documentation]             Main web setup
-    [Arguments]                 ${browser}
-    Create Directory   logs/${browser}/screenshots
-    Empty Directory             logs/${browser}/screenshots
-    SeleniumLibrary.Set Screenshot Directory    logs/${browser}/screenshots
-    Open Browser                about:blank    
-    ...                         ${browser}
+    [Documentation]    Main web setup
+    [Arguments]        ${browser}
+
+    IF    '${browser}' in ['chrome', 'headlesschrome']
+        ${dir}=    Set Variable    chrome
+    ELSE IF    '${browser}' in ['firefox', 'headlessfirefox']
+        ${dir}=    Set Variable    firefox
+    ELSE
+        ${dir}=    Set Variable    ${browser}
+    END
+
+    Create Directory    logs/${dir}/screenshots
+    Empty Directory     logs/${dir}/screenshots
+    SeleniumLibrary.Set Screenshot Directory    logs/${dir}/screenshots
+
+    Open Browser        about:blank    ${browser}
     Maximize Browser Window
 
 Main Web Teardown
