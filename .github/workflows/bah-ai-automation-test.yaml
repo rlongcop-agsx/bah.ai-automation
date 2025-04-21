@@ -137,6 +137,8 @@ jobs:
         name: safari
         path: logs/safari/
 
+    - name: Copy custom index.html into logs
+      run: cp index.html logs/
 
     - name: Publish test results as a GitHub Pages site
       uses: peaceiris/actions-gh-pages@v3
