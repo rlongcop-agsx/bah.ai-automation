@@ -9,9 +9,9 @@ Main Web Setup
     [Documentation]    Main web setup
     [Arguments]        ${browser}
 
-    IF    '${browser}' in ['chrome', 'headlesschrome']
+    IF    '${browser}' == 'chrome' or '${browser}' == 'headlesschrome'
         ${dir}=    Set Variable    chrome
-    ELSE IF    '${browser}' in ['firefox', 'headlessfirefox']
+    ELSE IF    '${browser}' == 'firefox' or '${browser}' == 'headlessfirefox'
         ${dir}=    Set Variable    firefox
     ELSE
         ${dir}=    Set Variable    ${browser}
