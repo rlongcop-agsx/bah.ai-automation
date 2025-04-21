@@ -126,13 +126,13 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: chrome
-        path: logs/headlesschrome/
+        path: logs/chrome/
 
     - name: Download Firefox logs
       uses: actions/download-artifact@v4
       with:
         name: firefox
-        path: logs/headlessfirefox/
+        path: logs/firefox/
 
     - name: Download Safari logs
       uses: actions/download-artifact@v4
