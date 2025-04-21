@@ -1,20 +1,20 @@
-1745194691298	geckodriver	INFO	Listening on 127.0.0.1:52017
-1745194691313	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" "/usr/bin/firefox" "--m ... ss" "--remote-debugging-port" "60173" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilecIP6V6"
+1745195077476	geckodriver	INFO	Listening on 127.0.0.1:53575
+1745195077490	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" "/usr/bin/firefox" "--m ... ss" "--remote-debugging-port" "56467" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileJQObwn"
 *** You are running in headless mode.
 console.warn: services.settings: Ignoring preference override of remote settings server
 console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
 [GFX1-]: glxtest: Unable to open a connection to the X server
-1745194691551	Marionette	INFO	Marionette enabled
-1745194691648	Marionette	INFO	Listening on port 42783
-WebDriver BiDi listening on ws://127.0.0.1:60173
-Read port: 42783
-1745194691812	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1745195077754	Marionette	INFO	Marionette enabled
+1745195077852	Marionette	INFO	Listening on port 38569
+WebDriver BiDi listening on ws://127.0.0.1:56467
+Read port: 38569
+1745195078035	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
 console.error: ({})
-DevTools listening on ws://127.0.0.1:60173/devtools/browser/fbde8bf1-c61a-46e6-ae86-d554eb1d6c04
+DevTools listening on ws://127.0.0.1:56467/devtools/browser/cd8abf33-de00-4ddf-b1c9-403692bb0c2d
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://v0-real-estate-marketplace-necizi.vercel.app."
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://v0-real-estate-marketplace-necizi.vercel.app."
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://v0-real-estate-marketplace-necizi.vercel.app."
 console.warn: FormAutofillSection: isRecordCreatable: Country not supported: undefined
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://v0-real-estate-marketplace-necizi.vercel.app."
-1745194696411	Marionette	INFO	Stopped listening on port 42783
+1745195082654	Marionette	INFO	Stopped listening on port 38569
