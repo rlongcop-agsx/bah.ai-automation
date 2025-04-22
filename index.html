@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bah.Ai | Test Status Report</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
@@ -72,11 +75,11 @@
 
   <div class="selector">
     <label for="browser-select">Select a browser report:</label>
-    <select id="browser-select">
-      <option value="chrome">Chrome</option>
-      <option value="firefox">Firefox</option>
-      <option value="safari">Safari</option>
-    </select>
+    <select id="browser-select" class="choices-select">
+      <option value="chrome" data-custom-properties='{"icon":"chrome-icon.png"}'>Chrome</option>
+      <option value="firefox" data-custom-properties='{"icon":"firefox-icon.png"}'>Firefox</option>
+      <option value="safari" data-custom-properties='{"icon":"safari-icon.png"}'>Safari</option>
+    </select>    
   </div>
 
   <div class="report-link" id="report-link">
