@@ -49,10 +49,10 @@ jobs:
     - name: Run headless Chrome tests
       run: |
         robot -d logs/chrome \
-        -v BASE_URL:${{ secrets.BASE_URL }} \
-        -v BROWSER:headlesschrome \
-        --name "Chrome Tests" \
-        tests
+          -v BASE_URL:${{ secrets.BASE_URL }} \
+          -v BROWSER:headlesschrome \
+          --name "Chrome Tests" \
+          tests
 
     - name: Upload Chrome logs
       if: always()
@@ -80,10 +80,10 @@ jobs:
     - name: Run headless Firefox tests
       run: |
         robot -d logs/firefox \
-        -v BASE_URL:${{ secrets.BASE_URL }} \
-        -v BROWSER:headlessfirefox \
-        --name "Firefox Tests" \
-        tests
+          -v BASE_URL:${{ secrets.BASE_URL }} \
+          -v BROWSER:headlessfirefox \
+          --name "Firefox Tests" \
+          tests
 
     - name: Upload Firefox logs
       if: always()
@@ -114,10 +114,11 @@ jobs:
     - name: Run Safari tests
       run: |
         robot -d logs/safari \
-        -v BASE_URL:${{ secrets.BASE_URL }} \
-        -v BROWSER:safari tests \
-        --name "Safari Tests" \
-        tests
+          -v BASE_URL:${{ secrets.BASE_URL }} \
+          -v BROWSER:safari \
+          --name "Safari Tests" \
+          tests
+
 
     - name: Upload Safari logs
       if: always()
