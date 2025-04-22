@@ -4,9 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bah.Ai | Test Status Report</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
+      background-image: url("nmblr-bg.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
       background-color: #f4f6f9;
       color: #333;
       padding: 2rem;
@@ -16,7 +24,7 @@
 
     h1 {
       text-align: center;
-      color: #1a73e8;
+      color: #fff1e6;
       margin-bottom: 2rem;
     }
 
@@ -39,25 +47,49 @@
 
     .report-link a {
       text-decoration: none;
-      color: #1a73e8;
+      color: white;
       font-weight: 500;
-      border: 1px solid #1a73e8;
+      border: 1px solid white;
       padding: 6px 12px;
       border-radius: 5px;
       transition: background 0.3s;
     }
 
     .report-link a:hover {
-      background-color: #1a73e8;
-      color: white;
+      background-color: white;
+      color: black;
     }
 
     iframe {
       width: 100%;
       height: 600px;
-      border: 1px solid #ddd;
+      border: 5px solid #ddd;
       border-radius: 8px;
       transition: opacity 0.3s ease-in-out;
+    }
+
+    .choices__item--choice::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    [data-value="chrome"] .choices__item--choice::before {
+      background-image: url("chrome-icon.png");
+    }
+
+    [data-value="firefox"] .choices__item--choice::before {
+      background-image: url("firefox-icon.png");
+    }
+
+    [data-value="safari"] .choices__item--choice::before {
+      background-image: url("safari-icon.png");
     }
 
     @media screen and (max-width: 768px) {
@@ -65,6 +97,7 @@
         height: 400px;
       }
     }
+    
   </style>
 </head>
 <body>
@@ -72,11 +105,11 @@
 
   <div class="selector">
     <label for="browser-select">Select a browser report:</label>
-    <select id="browser-select">
-      <option value="chrome">Chrome</option>
-      <option value="firefox">Firefox</option>
-      <option value="safari">Safari</option>
-    </select>
+    <select id="browser-select" class="choices-select">
+      <option value="chrome" data-custom-properties='{"icon":"chrome-icon.png"}'>Chrome</option>
+      <option value="firefox" data-custom-properties='{"icon":"firefox-icon.png"}'>Firefox</option>
+      <option value="safari" data-custom-properties='{"icon":"safari-icon.png"}'>Safari</option>
+    </select>    
   </div>
 
   <div class="report-link" id="report-link">
