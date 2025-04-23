@@ -267,109 +267,161 @@
       <div class="selector">
         <label for="browser-select"><i class="fas fa-globe"></i> Browser</label>
         <select id="browser-select" class="choices-select">
-          <option value="chrome" data-custom-properties='{"icon":"chrome-icon.png"}'>Chrome</option>
-          <option value="firefox" data-custom-properties='{"icon":"firefox-icon.png"}'>Firefox</option>
-          <option value="safari" data-custom-properties='{"icon":"safari-icon.png"}'>Safari</option>
+          <option value="chrome">Chrome</option>
+          <option value="firefox">Firefox</option>
+          <option value="safari">Safari</option>
         </select>
       </div>
 
-      <div class="stats">
-        <div class="stat-item">
-          <span><i class="fas fa-check-circle"></i> Passed:</span>
-          <span class="stat-value">24</span>
-        </div>
-        <div class="stat-item">
-          <span><i class="fas fa-exclamation-triangle"></i> Failed:</span>
-          <span class="stat-value" style="color: var(--error)">3</span>
-        </div>
-        <div class="stat-item">
-          <span><i class="fas fa-clock"></i> Skipped:</span>
-          <span class="stat-value" style="color: var(--warning)">2</span>
-        </div>
-        <div class="stat-item">
-          <span><i class="fas fa-percentage"></i> Pass Rate:</span>
-          <span class="stat-value" style="color: var(--success)">89%</span>
+      <div class="stats" id="test-stats">
+        <!-- This will be populated dynamically -->
+        <div class="loading">
+          <div class="spinner"></div>
+          <span>Loading test results...</span>
         </div>
       </div>
 
       <div class="report-actions">
-        <a href="browser-reports/chrome/report.html" target="_blank" class="btn btn-primary" id="report-link">
+        <a href="#" target="_blank" class="btn btn-primary" id="report-link">
           <i class="fas fa-external-link-alt"></i> Open Full Report
         </a>
-        <button class="btn btn-outline">
-          <i class="fas fa-download"></i> Download Results
-        </button>
-        <button class="btn btn-outline">
-          <i class="fas fa-history"></i> Run History
-        </button>
       </div>
     </div>
 
     <div class="report-container">
       <div class="status-bar">
-        <div class="status-indicator">
-          <div class="status-dot status-success"></div>
-          <span>Test Suite: <strong>Regression</strong></span>
+        <div class="status-indicator" id="status-indicator">
+          <div class="status-dot"></div>
+          <span>Test Suite: <strong id="test-suite">Regression</strong></span>
         </div>
         <div class="last-run">
-          Last run: <strong>Today, 14:32</strong>
+          Last run: <strong id="last-run-time">Loading...</strong>
         </div>
       </div>
       
-      <iframe id="report-frame" src="browser-reports/chrome/report.html"></iframe>
+      <iframe id="report-frame" src="about:blank"></iframe>
     </div>
   </div>
 
   <script>
+    // DOM elements
     const browserSelect = document.getElementById('browser-select');
     const reportFrame = document.getElementById('report-frame');
     const reportLink = document.getElementById('report-link');
+    const testStats = document.getElementById('test-stats');
+    const statusIndicator = document.getElementById('status-indicator');
+    const statusDot = statusIndicator.querySelector('.status-dot');
+    const lastRunTime = document.getElementById('last-run-time');
 
-    // Initialize loading state
-    reportFrame.addEventListener('load', function() {
-      this.style.opacity = 1;
-    });
-
-    browserSelect.addEventListener('change', function() {
-      const browser = this.value;
-      const url = `browser-reports/${browser}/report.html`;
-      
-      // Show loading state
-      reportFrame.style.opacity = 0;
-      
-      setTimeout(() => {
-        reportFrame.src = url;
-        reportLink.href = url;
-        reportLink.innerHTML = `<i class="fas fa-external-link-alt"></i> Open Full Report (${browser.charAt(0).toUpperCase() + browser.slice(1)})`;
-      }, 150);
-    });
-
-    // Simulate stats update (replace with real data)
-    function updateStats() {
-      // In a real implementation, you would fetch these from your test results
-      const stats = {
-        passed: Math.floor(Math.random() * 30) + 20,
-        failed: Math.floor(Math.random() * 5),
-        skipped: Math.floor(Math.random() * 3),
-      };
-      
-      const passRate = Math.round((stats.passed / (stats.passed + stats.failed + stats.skipped)) * 100);
-      
-      document.querySelectorAll('.stat-item')[0].querySelector('.stat-value').textContent = stats.passed;
-      document.querySelectorAll('.stat-item')[1].querySelector('.stat-value').textContent = stats.failed;
-      document.querySelectorAll('.stat-item')[2].querySelector('.stat-value').textContent = stats.skipped;
-      document.querySelectorAll('.stat-item')[3].querySelector('.stat-value').textContent = `${passRate}%`;
-      
-      // Update status indicator
-      const statusDot = document.querySelector('.status-dot');
-      statusDot.className = 'status-dot ' + 
-        (stats.failed > 3 ? 'status-error' : 
-         stats.failed > 0 ? 'status-warning' : 'status-success');
+    // Load test results
+    async function loadTestResults() {
+      try {
+        const response = await fetch('metrics.json');
+        if (!response.ok) throw new Error('Failed to load metrics');
+        
+        const data = await response.json();
+        updateDashboard(data);
+      } catch (error) {
+        console.error('Error loading test results:', error);
+        testStats.innerHTML = `
+          <div class="stat-item">
+            <span style="color: var(--error)">Error loading test results</span>
+          </div>
+        `;
+      }
     }
 
-    // Update stats every 5 seconds (simulation)
-    setInterval(updateStats, 5000);
-    updateStats(); // Initial call
+    // Update dashboard with live data
+    function updateDashboard(data) {
+      // Update last run time
+      lastRunTime.textContent = new Date(data.last_updated).toLocaleString();
+      
+      // Create stats HTML
+      let statsHTML = '';
+      let totalPassed = 0;
+      let totalFailed = 0;
+      
+      // Create browser-specific stats
+      for (const [browser, stats] of Object.entries(data.browsers)) {
+        statsHTML += `
+          <div class="stat-item">
+            <span><i class="fab fa-${browser}"></i> ${browser.charAt(0).toUpperCase() + browser.slice(1)}:</span>
+            <span class="stat-value" style="color: ${stats.failed > 0 ? 'var(--error)' : 'var(--success)'}">
+              ${stats.pass_rate.toFixed(1)}%
+            </span>
+          </div>
+        `;
+        totalPassed += stats.passed;
+        totalFailed += stats.failed;
+      }
+      
+      // Add totals
+      const totalTests = totalPassed + totalFailed;
+      const overallPassRate = totalTests > 0 ? (totalPassed / totalTests * 100) : 0;
+      
+      statsHTML += `
+        <div class="stat-item">
+          <span><i class="fas fa-check-circle"></i> Total Passed:</span>
+          <span class="stat-value" style="color: var(--success)">${totalPassed}</span>
+        </div>
+        <div class="stat-item">
+          <span><i class="fas fa-exclamation-triangle"></i> Total Failed:</span>
+          <span class="stat-value" style="color: ${totalFailed > 0 ? 'var(--error)' : 'var(--success)'}">${totalFailed}</span>
+        </div>
+        <div class="stat-item">
+          <span><i class="fas fa-percentage"></i> Overall Pass Rate:</span>
+          <span class="stat-value" style="color: ${overallPassRate < 90 ? 'var(--warning)' : 'var(--success)'}">
+            ${overallPassRate.toFixed(1)}%
+          </span>
+        </div>
+      `;
+      
+      testStats.innerHTML = statsHTML;
+      
+      // Update status indicator
+      if (totalFailed > 5) {
+        statusDot.className = 'status-dot status-error';
+      } else if (totalFailed > 0) {
+        statusDot.className = 'status-dot status-warning';
+      } else {
+        statusDot.className = 'status-dot status-success';
+      }
+      
+      // Set default browser report
+      updateBrowserReport('chrome', data);
+    }
+
+    // Update browser report display
+    function updateBrowserReport(browser, data) {
+      const reportUrl = `browser-reports/${browser}/report.html`;
+      
+      reportFrame.style.opacity = 0;
+      reportFrame.src = reportUrl;
+      reportLink.href = reportUrl;
+      reportLink.innerHTML = `
+        <i class="fas fa-external-link-alt"></i> 
+        ${browser.charAt(0).toUpperCase() + browser.slice(1)} Report
+        (${data.browsers[browser].pass_rate.toFixed(1)}%)
+      `;
+      
+      reportFrame.onload = () => {
+        reportFrame.style.opacity = 1;
+      };
+    }
+
+    // Event listeners
+    browserSelect.addEventListener('change', function() {
+      fetch('metrics.json')
+        .then(response => response.json())
+        .then(data => updateBrowserReport(this.value, data));
+    });
+
+    // Initialize
+    reportFrame.style.opacity = 0;
+    loadTestResults();
+
+    // Auto-refresh every 5 minutes
+    setInterval(loadTestResults, 300000);
   </script>
 </body>
 </html>
