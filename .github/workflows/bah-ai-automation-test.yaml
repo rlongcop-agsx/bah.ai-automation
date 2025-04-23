@@ -21,98 +21,110 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-        pip install robotframework
-        pip install robotframework-browser
+    - name: Install dependencies from requirements.txt
+      run: pip install -r requirements.txt
 
-    - name: Cache dependencies
-      uses: actions/cache@v3
-      id: cache
+    - name: Upload installed environment
+      uses: actions/upload-artifact@v4
       with:
-        path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+        name: python-env
+        path: .
 
   run_chrome_tests:
     needs: install_dependencies
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
-    - name: Run Chrome tests
+    - name: Install dependencies from requirements.txt
+      run: pip install -r requirements.txt
+
+    - name: Run headless Chrome tests
       run: |
-        robot -d results/chrome \
+        robot -d logs/chrome \
           -v BASE_URL:${{ secrets.BASE_URL }} \
           -v BROWSER:headlesschrome \
-          -o output.xml \
           --name "Chrome Tests" \
-          tests/
+          tests
 
-    - name: Upload Chrome results
+    - name: Upload Chrome logs
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: chrome-results
-        path: results/chrome/output.xml
-
+        name: chrome
+        path: logs/chrome/
+  
   run_firefox_tests:
     needs: install_dependencies
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
-    - name: Run Firefox tests
+    - name: Install dependencies from requirements.txt
+      run: pip install -r requirements.txt
+
+    - name: Run headless Firefox tests
       run: |
-        robot -d results/firefox \
+        robot -d logs/firefox \
           -v BASE_URL:${{ secrets.BASE_URL }} \
           -v BROWSER:headlessfirefox \
-          -o output.xml \
           --name "Firefox Tests" \
-          tests/
+          tests
 
-    - name: Upload Firefox results
+    - name: Upload Firefox logs
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: firefox-results
-        path: results/firefox/output.xml
+        name: firefox
+        path: logs/firefox/
 
   run_safari_tests:
     needs: install_dependencies
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
     - name: Enable safaridriver
       run: sudo safaridriver --enable
 
+    - name: Install dependencies from requirements.txt
+      run: pip install -r requirements.txt
+
     - name: Run Safari tests
-      timeout-minutes: 30
       run: |
-        robot -d results/safari \
+        robot -d logs/safari \
           -v BASE_URL:${{ secrets.BASE_URL }} \
           -v BROWSER:safari \
-          -o output.xml \
           --name "Safari Tests" \
-          --exclude known_safari_issue \
-          tests/
+          tests
 
-    - name: Upload Safari results
+    - name: Upload Safari logs
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: safari-results
-        path: results/safari/output.xml
+        name: safari
+        path: logs/safari/
 
   merge_reports:
     needs: [run_chrome_tests, run_firefox_tests, run_safari_tests]
@@ -124,26 +136,32 @@ jobs:
         with:
           python-version: '3.12'
 
-      # Download all browser results
+      # Install required tools
+      - name: Install dependencies
+        run: |
+          pip install robotframework
+          sudo apt-get install -y jq
+
+      # Download all browser results (note artifact names match upload names)
       - name: Download Chrome results
         uses: actions/download-artifact@v4
         with:
-          name: chrome-results
-          path: results/chrome/
+          name: chrome
+          path: logs/chrome/
       - name: Download Firefox results
         uses: actions/download-artifact@v4
         with:
-          name: firefox-results
-          path: results/firefox/
+          name: firefox
+          path: logs/firefox/
       - name: Download Safari results
         uses: actions/download-artifact@v4
         with:
-          name: safari-results
-          path: results/safari/
+          name: safari
+          path: logs/safari/
 
-      # Install jq for JSON processing
-      - name: Install jq
-        run: sudo apt-get install -y jq
+      # Create output directory
+      - name: Create results folder
+        run: mkdir -p results
 
       # Generate combined metrics
       - name: Generate combined metrics
@@ -158,7 +176,7 @@ jobs:
           }
           
           for browser in ['chrome', 'firefox', 'safari']:
-              result = ExecutionResult(f'results/{browser}/output.xml')
+              result = ExecutionResult(f'logs/{browser}/output.xml')
               stats = result.statistics.total
               metrics['browsers'][browser] = {
                   'passed': stats.passed,
@@ -179,9 +197,9 @@ jobs:
           
           # Copy all individual reports
           mkdir -p results/browser-reports
-          cp results/chrome/*.html results/browser-reports/chrome/
-          cp results/firefox/*.html results/browser-reports/firefox/
-          cp results/safari/*.html results/browser-reports/safari/
+          cp logs/chrome/*.html results/browser-reports/chrome/
+          cp logs/firefox/*.html results/browser-reports/firefox/
+          cp logs/safari/*.html results/browser-reports/safari/
 
       # Quality gate check
       - name: Check quality gate
