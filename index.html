@@ -293,7 +293,7 @@
       </div>
 
       <div class="report-actions">
-        <a href="chrome/report.html" target="_blank" class="btn btn-primary" id="report-link">
+        <a href="browser-reports/chrome/report.html" target="_blank" class="btn btn-primary" id="report-link">
           <i class="fas fa-external-link-alt"></i> Open Full Report
         </a>
         <button class="btn btn-outline">
@@ -316,7 +316,7 @@
         </div>
       </div>
       
-      <iframe id="report-frame" src="chrome/report.html"></iframe>
+      <iframe id="report-frame" src="browser-reports/chrome/report.html"></iframe>
     </div>
   </div>
 
@@ -332,7 +332,7 @@
 
     browserSelect.addEventListener('change', function() {
       const browser = this.value;
-      const url = `${browser}/report.html`;
+      const url = `browser-reports/${browser}/report.html`;
       
       // Show loading state
       reportFrame.style.opacity = 0;
