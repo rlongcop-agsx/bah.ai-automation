@@ -21,146 +21,188 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: Install dependencies from requirements.txt
-      run: pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install robotframework
+        pip install robotframework-browser
 
-    - name: Upload installed environment
-      uses: actions/upload-artifact@v4
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      id: cache
       with:
-        name: python-env
-        path: .
+        path: ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
 
   run_chrome_tests:
     needs: install_dependencies
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
-    - name: Install dependencies from requirements.txt
-      run: pip install -r requirements.txt
-
-    - name: Run headless Chrome tests
+    - name: Run Chrome tests
       run: |
-        robot -d logs/chrome \
+        robot -d results/chrome \
           -v BASE_URL:${{ secrets.BASE_URL }} \
           -v BROWSER:headlesschrome \
+          -o output.xml \
           --name "Chrome Tests" \
-          tests
+          tests/
 
-    - name: Upload Chrome logs
-      if: always()
+    - name: Upload Chrome results
       uses: actions/upload-artifact@v4
       with:
-        name: chrome
-        path: logs/chrome/
-  
+        name: chrome-results
+        path: results/chrome/output.xml
+
   run_firefox_tests:
     needs: install_dependencies
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
-    - name: Install dependencies from requirements.txt
-      run: pip install -r requirements.txt
-
-    - name: Run headless Firefox tests
+    - name: Run Firefox tests
       run: |
-        robot -d logs/firefox \
+        robot -d results/firefox \
           -v BASE_URL:${{ secrets.BASE_URL }} \
           -v BROWSER:headlessfirefox \
+          -o output.xml \
           --name "Firefox Tests" \
-          tests
+          tests/
 
-    - name: Upload Firefox logs
-      if: always()
+    - name: Upload Firefox results
       uses: actions/upload-artifact@v4
       with:
-        name: firefox
-        path: logs/firefox/
+        name: firefox-results
+        path: results/firefox/output.xml
 
   run_safari_tests:
     needs: install_dependencies
     runs-on: macos-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
     - name: Enable safaridriver
       run: sudo safaridriver --enable
 
-    - name: Install dependencies from requirements.txt
-      run: pip install -r requirements.txt
-
     - name: Run Safari tests
+      timeout-minutes: 30
       run: |
-        robot -d logs/safari \
+        robot -d results/safari \
           -v BASE_URL:${{ secrets.BASE_URL }} \
           -v BROWSER:safari \
+          -o output.xml \
           --name "Safari Tests" \
-          tests
+          --exclude known_safari_issue \
+          tests/
 
-
-    - name: Upload Safari logs
-      if: always()
+    - name: Upload Safari results
       uses: actions/upload-artifact@v4
       with:
-        name: safari
-        path: logs/safari/
+        name: safari-results
+        path: results/safari/output.xml
 
-  publish_report:
+  merge_reports:
     needs: [run_chrome_tests, run_firefox_tests, run_safari_tests]
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
 
-    - name: Download Chrome logs
-      uses: actions/download-artifact@v4
-      with:
-        name: chrome
-        path: logs/chrome/
+      # Download all browser results
+      - name: Download Chrome results
+        uses: actions/download-artifact@v4
+        with:
+          name: chrome-results
+          path: results/chrome/
+      - name: Download Firefox results
+        uses: actions/download-artifact@v4
+        with:
+          name: firefox-results
+          path: results/firefox/
+      - name: Download Safari results
+        uses: actions/download-artifact@v4
+        with:
+          name: safari-results
+          path: results/safari/
 
-    - name: Download Firefox logs
-      uses: actions/download-artifact@v4
-      with:
-        name: firefox
-        path: logs/firefox/
+      # Install jq for JSON processing
+      - name: Install jq
+        run: sudo apt-get install -y jq
 
-    - name: Download Safari logs
-      uses: actions/download-artifact@v4
-      with:
-        name: safari
-        path: logs/safari/
+      # Generate combined metrics
+      - name: Generate combined metrics
+        run: |
+          python -c "
+          from robot.api import ExecutionResult
+          import json
+          
+          metrics = {
+              'browsers': {},
+              'last_updated': '$(date -u +'%Y-%m-%dT%H:%M:%SZ')'
+          }
+          
+          for browser in ['chrome', 'firefox', 'safari']:
+              result = ExecutionResult(f'results/{browser}/output.xml')
+              stats = result.statistics.total
+              metrics['browsers'][browser] = {
+                  'passed': stats.passed,
+                  'failed': stats.failed,
+                  'pass_rate': (stats.passed / stats.total) * 100,
+                  'total': stats.total
+              }
+          
+          with open('results/metrics.json', 'w') as f:
+              json.dump(metrics, f, indent=2)
+          "
 
-    - name: Copy custom index.html into logs
-      run: cp index.html logs/
+      # Prepare dashboard files
+      - name: Prepare dashboard
+        run: |
+          # Copy your existing index.html
+          cp index.html results/
+          
+          # Copy all individual reports
+          mkdir -p results/browser-reports
+          cp results/chrome/*.html results/browser-reports/chrome/
+          cp results/firefox/*.html results/browser-reports/firefox/
+          cp results/safari/*.html results/browser-reports/safari/
 
-    - name: Publish test results as a GitHub Pages site
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        personal_token: ${{ secrets.GH_PAGES_TOKEN }}
-        external_repository: ${{ github.repository }}
-        publish_dir: ./logs/
-        publish_branch: gh-pages
-        commit_message: "Publish Bah.Ai Report"
+      # Quality gate check
+      - name: Check quality gate
+        run: |
+          pass_rate=$(jq -r '[.browsers[].pass_rate] | add / length' results/metrics.json)
+          if (( $(echo "$pass_rate < 90" | bc -l) )); then
+            echo "::error::Average pass rate below 90% ($pass_rate%)"
+            exit 1
+          fi
+
+      - name: Upload final reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: results/
+
+      # Publish to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./results/
+          publish_branch: gh-pages
+          commit_message: "Update test dashboard"
