@@ -142,7 +142,7 @@ jobs:
           pip install robotframework
           sudo apt-get install -y jq
 
-      # Download all browser results (note artifact names match upload names)
+      # Download all browser results
       - name: Download Chrome results
         uses: actions/download-artifact@v4
         with:
@@ -159,9 +159,12 @@ jobs:
           name: safari
           path: logs/safari/
 
-      # Create output directory
-      - name: Create results folder
-        run: mkdir -p results
+      # Create directory structure
+      - name: Create output folders
+        run: |
+          mkdir -p results/browser-reports/chrome
+          mkdir -p results/browser-reports/firefox
+          mkdir -p results/browser-reports/safari
 
       # Generate combined metrics
       - name: Generate combined metrics
@@ -176,30 +179,41 @@ jobs:
           }
           
           for browser in ['chrome', 'firefox', 'safari']:
-              result = ExecutionResult(f'logs/{browser}/output.xml')
-              stats = result.statistics.total
-              metrics['browsers'][browser] = {
-                  'passed': stats.passed,
-                  'failed': stats.failed,
-                  'pass_rate': (stats.passed / stats.total) * 100,
-                  'total': stats.total
-              }
+              try:
+                  result = ExecutionResult(f'logs/{browser}/output.xml')
+                  stats = result.statistics.total
+                  metrics['browsers'][browser] = {
+                      'passed': stats.passed,
+                      'failed': stats.failed,
+                      'pass_rate': (stats.passed / stats.total) * 100 if stats.total > 0 else 0,
+                      'total': stats.total
+                  }
+              except Exception as e:
+                  print(f'Error processing {browser}: {str(e)}')
+                  metrics['browsers'][browser] = {
+                      'passed': 0,
+                      'failed': 0,
+                      'pass_rate': 0,
+                      'total': 0
+                  }
           
           with open('results/metrics.json', 'w') as f:
               json.dump(metrics, f, indent=2)
           "
 
-      # Prepare dashboard files
+      # Copy reports and dashboard
       - name: Prepare dashboard
         run: |
           # Copy your existing index.html
           cp index.html results/
           
-          # Copy all individual reports
-          mkdir -p results/browser-reports
-          cp logs/chrome/*.html results/browser-reports/chrome/
-          cp logs/firefox/*.html results/browser-reports/firefox/
-          cp logs/safari/*.html results/browser-reports/safari/
+          # Copy all individual reports if they exist
+          [ -f logs/chrome/report.html ] && cp logs/chrome/report.html results/browser-reports/chrome/ || echo "No Chrome report"
+          [ -f logs/chrome/log.html ] && cp logs/chrome/log.html results/browser-reports/chrome/ || echo "No Chrome log"
+          [ -f logs/firefox/report.html ] && cp logs/firefox/report.html results/browser-reports/firefox/ || echo "No Firefox report"
+          [ -f logs/firefox/log.html ] && cp logs/firefox/log.html results/browser-reports/firefox/ || echo "No Firefox log"
+          [ -f logs/safari/report.html ] && cp logs/safari/report.html results/browser-reports/safari/ || echo "No Safari report"
+          [ -f logs/safari/log.html ] && cp logs/safari/log.html results/browser-reports/safari/ || echo "No Safari log"
 
       # Quality gate check
       - name: Check quality gate
