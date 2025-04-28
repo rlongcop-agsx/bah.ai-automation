@@ -58,8 +58,6 @@ graph TD
   C1 --> D[merge_reports]
   C2 --> D
   C3 --> D
-  D --> E{Pass Rate ≥ 90%?}
-  E -- Yes --> F[Deploy to GitHub Pages]
-  E -- No --> G[Fail Pipeline 🚫]
+  D --> F[Deploy to GitHub Pages]
 ```
 
