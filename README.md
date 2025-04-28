@@ -24,7 +24,7 @@ This automation framework provides comprehensive cross-browser testing for the B
 
 ## 🛠️ Technical Stack
 - **Test Framework**: Robot Framework
-- **Browser Automation**: Browser Library
+- **Browser Automation**: Selenium Library
 - **CI/CD**: GitHub Actions
 - **Reporting**: Custom HTML Dashboard
 - **Visualization**: GitHub Pages
