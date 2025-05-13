@@ -16,7 +16,7 @@ Test Case 1: Validate that the user can successfully navigate to the login page.
     [Documentation]    Validate that the user can successfully navigate to the login page.
     [Tags]             signin    
     ...                UL-TC-002
-    bahai_app.Navigate to the login page    ${HOME_PAGE}    
+    bahai_app.Navigate to the login page    ${HOME_PAGE}/    
     ...                                     ${home_header}
     bahai_app.Click button                  ${login_btn}
     bahai_app.Validate text displayed       Sign in to your account

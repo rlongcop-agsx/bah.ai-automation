@@ -5,6 +5,7 @@ Library           SeleniumLibrary
 Navigate to login page
     [Arguments]                          ${url}
     Go To                                ${url}
+    Location Should Be                   ${url}
 
 Verify page loaded
     [Arguments]                         ${locator}
