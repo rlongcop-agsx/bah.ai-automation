@@ -46,6 +46,17 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
+    - name: Install OpenVPN
+      run: sudo apt-get install -y openvpn
+    
+    - name: Decode and save VPN config
+      run: echo "${{ secrets.VPN_ENDPOINT }}" | base64 --decode > vpn.ovpn
+    
+    - name: Connect to VPN
+      run: |
+        sudo openvpn --config vpn.ovpn --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") &
+        sleep 15  # wait for VPN to connect
+
     - name: Run headless Chrome tests
       run: |
         robot -d logs/chrome \
@@ -76,6 +87,17 @@ jobs:
 
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
+
+    - name: Install OpenVPN
+      run: sudo apt-get install -y openvpn
+    
+    - name: Decode and save VPN config
+      run: echo "${{ secrets.VPN_ENDPOINT }}" | base64 --decode > vpn.ovpn
+    
+    - name: Connect to VPN
+      run: |
+        sudo openvpn --config vpn.ovpn --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") &
+        sleep 15  # wait for VPN to connect
 
     - name: Run headless Firefox tests
       run: |
@@ -110,6 +132,17 @@ jobs:
 
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
+
+    - name: Install OpenVPN
+      run: sudo apt-get install -y openvpn
+    
+    - name: Decode and save VPN config
+      run: echo "${{ secrets.VPN_ENDPOINT }}" | base64 --decode > vpn.ovpn
+    
+    - name: Connect to VPN
+      run: |
+        sudo openvpn --config vpn.ovpn --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") &
+        sleep 15  # wait for VPN to connect
 
     - name: Run Safari tests
       run: |
@@ -205,7 +238,7 @@ jobs:
       - name: Prepare dashboard
         run: |
           # Copy your existing index.html
-          cp index.html results/
+          cp docs/index.html results/
           
           # Copy all individual reports if they exist
           [ -f logs/chrome/report.html ] && cp logs/chrome/report.html results/browser-reports/chrome/ || echo "No Chrome report"

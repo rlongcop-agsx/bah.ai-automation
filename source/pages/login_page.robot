@@ -8,7 +8,7 @@ Navigate to login page
 
 Verify page loaded
     [Arguments]                         ${locator}
-    Wait Until Element Is Visible       ${locator}
+    Wait Until Keyword Succeeds    10    1s    Wait Until Element Is Visible       ${locator}
 
 Click button
     [Arguments]                         ${button}
@@ -32,3 +32,9 @@ Validate text displayed in element
     [Arguments]                          ${expected_text}     
     ...                                  ${locator}
     Element Should Contain               ${locator}    ${expected_text}
+
+Validate value displayed
+    [Arguments]                          ${locator}
+    ...                                  ${expected_text}
+    ${value}    Get Element Attribute    ${locator}    value
+    Should Be Equal As Strings    ${value}    ${expected_text}

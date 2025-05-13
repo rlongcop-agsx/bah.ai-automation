@@ -44,3 +44,10 @@ Click button
 Validate text displayed
     [Arguments]                          ${expected_text}    
     signup_page.Validate text displayed in page    ${expected_text}
+
+Validate value displayed
+    [Arguments]                          ${locator}    
+    ...                                  ${expected_text}
+    login_page.Verify page loaded        ${locator}
+    login_page.Validate value displayed  ${locator}    
+    ...                                  ${expected_text}
