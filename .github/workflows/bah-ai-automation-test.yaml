@@ -46,21 +46,10 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
-    - name: Install OpenVPN
-      run: sudo apt-get install -y openvpn
-    
-    - name: Decode and save VPN config
-      run: echo "${{ secrets.VPN_ENDPOINT }}" | base64 --decode > vpn.ovpn
-    
-    - name: Connect to VPN
-      run: |
-        sudo openvpn --config vpn.ovpn --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") &
-        sleep 15  # wait for VPN to connect
-
     - name: Run headless Chrome tests
       run: |
         robot -d logs/chrome \
-          -v BASE_URL:${{ secrets.BASE_URL }} \
+          -v BASE_URL:${{ secrets.PUBLIC_BASE_URL_STG }} \
           -v BROWSER:headlesschrome \
           --name "Chrome Tests" \
           tests
@@ -90,21 +79,10 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
-    - name: Install OpenVPN
-      run: sudo apt-get install -y openvpn
-    
-    - name: Decode and save VPN config
-      run: echo "${{ secrets.VPN_ENDPOINT }}" | base64 --decode > vpn.ovpn
-    
-    - name: Connect to VPN
-      run: |
-        sudo openvpn --config vpn.ovpn --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") &
-        sleep 15  # wait for VPN to connect
-
     - name: Run headless Firefox tests
       run: |
         robot -d logs/firefox \
-          -v BASE_URL:${{ secrets.BASE_URL }} \
+          -v BASE_URL:${{ secrets.PUBLIC_BASE_URL_STG }} \
           -v BROWSER:headlessfirefox \
           --name "Firefox Tests" \
           tests
@@ -137,23 +115,10 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
-    - name: Install OpenVPN
-      run: |
-        brew update
-        brew install openvpn
-    
-    - name: Decode and save VPN config
-      run: echo "${{ secrets.VPN_ENDPOINT }}" | base64 --decode > vpn.ovpn
-    
-    - name: Connect to VPN
-      run: |
-        sudo openvpn --config vpn.ovpn --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") &
-        sleep 15  # wait for VPN to connect
-
     - name: Run Safari tests
       run: |
         robot -d logs/safari \
-          -v BASE_URL:${{ secrets.BASE_URL }} \
+          -v BASE_URL:${{ secrets.PUBLIC_BASE_URL_STG }} \
           -v BROWSER:safari \
           --name "Safari Tests" \
           tests
