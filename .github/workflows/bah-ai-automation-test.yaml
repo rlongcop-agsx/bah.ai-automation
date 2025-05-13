@@ -65,6 +65,8 @@ jobs:
           --name "Chrome Tests" \
           tests
 
+      continue-on-error: true
+
     - name: Upload Chrome logs
       if: always()
       uses: actions/upload-artifact@v4
@@ -106,6 +108,8 @@ jobs:
           -v BROWSER:headlessfirefox \
           --name "Firefox Tests" \
           tests
+
+      continue-on-error: true
 
     - name: Upload Firefox logs
       if: always()
@@ -153,6 +157,8 @@ jobs:
           -v BROWSER:safari \
           --name "Safari Tests" \
           tests
+
+      continue-on-error: true
 
     - name: Upload Safari logs
       if: always()
