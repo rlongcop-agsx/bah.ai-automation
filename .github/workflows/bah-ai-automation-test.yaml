@@ -134,7 +134,9 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Install OpenVPN
-      run: sudo apt-get install -y openvpn
+      run: |
+        brew update
+        brew install openvpn
     
     - name: Decode and save VPN config
       run: echo "${{ secrets.VPN_ENDPOINT }}" | base64 --decode > vpn.ovpn
