@@ -8,6 +8,10 @@ Navigate to login page
     Go To                                ${url}
     Location Should Be                   ${url}
 
+Verify URL loaded
+    [Arguments]                          ${url}
+    Location Should Be                   ${url}
+
 Verify page loaded
     [Arguments]                         ${locator}
     Wait Until Keyword Succeeds    10    1s    Wait Until Element Is Visible       ${locator}

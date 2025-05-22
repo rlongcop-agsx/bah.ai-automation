@@ -4,3 +4,7 @@
 *.log
 *.DS_store
 *.png
+helpers/credentials.json
+helpers/token.pickle
+helpers/psql_script.robot
+data/variables/private_variables.robot
