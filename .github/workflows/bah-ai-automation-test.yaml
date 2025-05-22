@@ -46,18 +46,12 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
-    - name: Decode Gmail credentials from secrets
-      run: |
-        echo "${{ secrets.GMAIL_CREDENTIALS_B64 }}" | base64 -d > helpers/credentials.json
-        echo "${{ secrets.GMAIL_TOKEN_B64 }}" | base64 -d > helpers/token.pickle
-
     - name: Run headless Chrome tests
       run: |
         robot -d logs/chrome \
           -v BASE_URL:${{ secrets.PUBLIC_BASE_URL_STG }} \
           -v BROWSER:headlesschrome \
           --name "Chrome Tests" \
-          --exclude signup \
           tests
 
       continue-on-error: true
@@ -85,18 +79,12 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
-    - name: Decode Gmail credentials from secrets
-      run: |
-        echo "${{ secrets.GMAIL_CREDENTIALS_B64 }}" | base64 -d > helpers/credentials.json
-        echo "${{ secrets.GMAIL_TOKEN_B64 }}" | base64 -d > helpers/token.pickle
-
     - name: Run headless Firefox tests
       run: |
         robot -d logs/firefox \
           -v BASE_URL:${{ secrets.PUBLIC_BASE_URL_STG }} \
           -v BROWSER:headlessfirefox \
           --name "Firefox Tests" \
-          --exclude signup \
           tests
 
       continue-on-error: true
@@ -127,18 +115,12 @@ jobs:
     - name: Install dependencies from requirements.txt
       run: pip install -r requirements.txt
 
-    - name: Decode Gmail credentials from secrets
-      run: |
-        echo "${{ secrets.GMAIL_CREDENTIALS_B64 }}" | base64 -d > helpers/credentials.json
-        echo "${{ secrets.GMAIL_TOKEN_B64 }}" | base64 -d > helpers/token.pickle
-
     - name: Run Safari tests
       run: |
         robot -d logs/safari \
           -v BASE_URL:${{ secrets.PUBLIC_BASE_URL_STG }} \
           -v BROWSER:safari \
           --name "Safari Tests" \
-          --exclude signup \
           tests
 
       continue-on-error: true
