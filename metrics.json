@@ -7,9 +7,9 @@
       "total": 63
     },
     "firefox": {
-      "passed": 35,
-      "failed": 28,
-      "pass_rate": 55.55555555555556,
+      "passed": 31,
+      "failed": 32,
+      "pass_rate": 49.2063492063492,
       "total": 63
     },
     "safari": {
@@ -19,5 +19,5 @@
       "total": 63
     }
   },
-  "last_updated": "2025-05-28T03:35:59Z"
+  "last_updated": "2025-05-28T04:59:42Z"
 }
