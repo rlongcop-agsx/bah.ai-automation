@@ -41,3 +41,17 @@ ${change_email_link}=           xpath=//*[text()='Change your email']
 # home page
 ${home_header}=                xpath=//*[@id="root"]/div/div/main/div[2]/div[1]/img
 ${bahai_logo}=                xpath=//*[@id="root"]/div/div/main/div[1]/div[1]/a
+
+# reservation page
+${properties_nav}=             xpath=(//*[text()='Properties'])[1]
+${property}=                   xpath=(//*[text()='View Details'])[1]
+${reserve_btn}=                 xpath=//*[text()='Reserve Now (5% Down)']
+${consent_checkbox}=            id=terms
+${consent_modal}=               xpath=//*[text()='Payment Terms and Conditions']
+${back_btn}=                    xpath=//*[text()='Back to Property']
+${proceed_btn}=                 xpath=//*[text()='Proceed to Payment']
+${card_number_field}=           name=cardNumber
+${cardholder_name_field}=       name=billingName
+${expiry_date_field}=           name=cardExpiry
+${cvc_field}=                   name=cardCvc
+${payment_form}=                css=div.App-Payment

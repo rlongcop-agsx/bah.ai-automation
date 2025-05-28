@@ -3,7 +3,11 @@ Library           SeleniumLibrary
 Library           Collections
 
 *** Keywords ***
-Navigate to login page
+Click text link
+    [Arguments]                          ${text}
+    Click Link                           ${text}
+
+Navigate to page
     [Arguments]                          ${url}
     Go To                                ${url}
     Location Should Be                   ${url}
@@ -24,7 +28,7 @@ Enter credential
     
 Validate text displayed in page
     [Arguments]                          ${expected_text}
-    Page Should Contain                  ${expected_text}   
+    Wait Until Keyword Succeeds    10    1    Page Should Contain                  ${expected_text}
 
 Validate text displayed in element
     [Arguments]                          ${expected_text}     
@@ -47,16 +51,27 @@ Validate aria label displayed
     ...                                  aria-label
     Should Be Equal As Strings           ${value}    
     ...                                  ${expected_text}
+    
+Click property
+    [Arguments]                          ${property_title}
+    Wait Until Page Contains             ${property_title}
+    Click Element                        xpath=//div[@title="${property_title}"]/ancestor::div[contains(@class, "relative") and contains(@class, "flex")]/descendant::button[.//span[text()="View Details"]]
 
-Reopen the website
+Validate checkbox
+    [Arguments]                          ${locator}
+    ...                                  ${expected_text}
+    ${value}    Get Element Attribute    ${locator}    
+    ...                                  data-state
+    Should Be Equal As Strings           ${value}    
+    ...                                  ${expected_text}
+
+Page Location Should Contain
+    [Arguments]                          ${url}             
+    Wait Until Location Contains         ${url}    
+    ...                                  timeout=15s
+
+Switch to new tab
     [Arguments]                          ${url}
-    Execute JavaScript                   window.open();
-    ${handles}=                          Get Window Handles
-    Switch Window                        ${handles[0]}
-    Close Window
-    Switch Window                        ${handles[1]}
-    Go To                                ${url}
+    Switch Window                        NEW
+    Location Should Be                   ${url}
 
-Validate OTP code is not empty
-    [Arguments]                          ${otp_code}
-    Should Not Be Empty                  ${otp_code}

@@ -169,7 +169,8 @@ Test Case 12: Verify that the "Change your email" text link works as expected.
 Test Case 13: Validate that the user can successfully register.
     [Documentation]    The user should be able to register an account successfully.
     [Tags]             signup    
-    ...                UR-TC-018
+    ...                UR-TC-018    
+    ...                smoke
     bahai_app.Delete registered user         ${DB_NAME}    
     ...                                      ${DB_USER}    
     ...                                      ${DB_PASSWORD}    
@@ -190,11 +191,13 @@ Test Case 13: Validate that the user can successfully register.
     ...                                      ${PASSWORD}
     bahai_app.Click create account           ${create_account_btn}
     bahai_app.Validate text displayed       We've sent an OTP to
-    Sleep    15s
+    Sleep    10s
     ${otp_code}=                            bahai_app.Get the OTP code    
     ...                                     Bahai Deals Registration OTP
 
     bahai_app.Enter credential              ${reset_otp_field}
     ...                                     ${otp_code}
     bahai_app.Click button                  ${signup_submit_btn}
+    bahai_app.Validate text displayed       Thanks for signing up!
+
 

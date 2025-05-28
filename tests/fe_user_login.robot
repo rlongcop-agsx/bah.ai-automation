@@ -71,7 +71,8 @@ Test Case 5: Validate if that the password can be masked.
 Test Case 6: Validate that the user can login successfully.
     [Documentation]    Validate that the user can login successfully.
     [Tags]             signin    
-    ...                UL-TC-008
+    ...                UL-TC-008    
+    ...                smoke
     bahai_app.Navigate to the login page    ${LOGIN_PAGE}    
     ...                                     ${login_form}
     bahai_app.Enter credential              ${login_email_field}    
@@ -219,7 +220,8 @@ Test Case 16: Validate that the user can successfully reset the password.
     [Documentation]    The user should be able to reset the password.
     [Tags]             signin    
     ...                forget_password
-    ...                UL-TC-035
+    ...                UL-TC-035    
+    ...                smoke
     bahai_app.Navigate to the login page    ${LOGIN_PAGE}
     ...                                     ${login_form}
     bahai_app.Click button                  ${reset_password_link}

@@ -20,10 +20,6 @@ Click button
     [Arguments]                         ${button}
     Click Element                       ${button}
 
-Click link
-    [Arguments]                         ${text}
-    Click Link                           ${text}
-
 Enter credential
     [Arguments]                          ${credential}     
     ...                                  ${locator}

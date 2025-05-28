@@ -3,10 +3,19 @@ Documentation     This is the main keywords for the Asenso app
 Resource          pages/login_page.robot
 Resource          pages/signup_page.robot
 Resource          pages/home_page.robot
+Resource          pages/reservation_page.robot
 Library           ../helpers/OtpLibrary.py
 Resource          ../helpers/psql_script.robot
 
 *** Keywords ***
+Click the Terms text link
+    [Arguments]                                          ${text}
+    reservation_page.Click text link                     ${text}
+
+Click the Privacy text link
+    [Arguments]                                          ${text}
+    reservation_page.Click text link                     ${text}
+
 Get the OTP code
     [Arguments]                                          ${subject}
     ${otp_code}=                                         get_otp    ${subject}
@@ -53,6 +62,10 @@ Validate text displayed
     [Arguments]                                          ${expected_text}    
     signup_page.Validate text displayed in page          ${expected_text}
 
+Wait until text displayed
+    [Arguments]                                          ${expected_text}    
+    reservation_page.Validate text displayed in page     ${expected_text}
+
 Validate value displayed
     [Arguments]                                          ${locator}    
     ...                                                  ${expected_text}
@@ -97,6 +110,24 @@ Navigate to the signup page
     ...                                                  ${locator}
     signup_page.Navigate to login page                   ${url}
     signup_page.Verify page loaded                       ${locator}
+
+Click a Property
+    [Arguments]                                          ${property_title}
+    reservation_page.Click property                      ${property_title}
+
+Validate checkbox
+    [Arguments]                                          ${locator}    
+    ...                                                  ${expected_text}
+    reservation_page.Validate checkbox                   ${locator}    
+    ...                                                  ${expected_text}
+
+Page URL Should Contain
+    [Arguments]                                          ${url}             
+    reservation_page.Page Location Should Contain        ${url}   
+
+Switch to new tab
+    [Arguments]                                          ${url}    
+    reservation_page.Switch to new tab                   ${url}
 
 Delete registered user
     [Arguments]                                          ${DB_NAME}    
