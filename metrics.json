@@ -1,23 +1,23 @@
 {
   "browsers": {
     "chrome": {
-      "passed": 27,
-      "failed": 6,
-      "pass_rate": 81.81818181818183,
-      "total": 33
+      "passed": 60,
+      "failed": 3,
+      "pass_rate": 95.23809523809523,
+      "total": 63
     },
     "firefox": {
-      "passed": 28,
-      "failed": 5,
-      "pass_rate": 84.84848484848484,
-      "total": 33
+      "passed": 35,
+      "failed": 28,
+      "pass_rate": 55.55555555555556,
+      "total": 63
     },
     "safari": {
-      "passed": 28,
-      "failed": 5,
-      "pass_rate": 84.84848484848484,
-      "total": 33
+      "passed": 57,
+      "failed": 6,
+      "pass_rate": 90.47619047619048,
+      "total": 63
     }
   },
-  "last_updated": "2025-05-22T11:41:07Z"
+  "last_updated": "2025-05-28T03:35:59Z"
 }
