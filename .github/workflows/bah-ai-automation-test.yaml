@@ -227,14 +227,37 @@ jobs:
         run: |
           # Copy your existing index.html
           cp docs/index.html results/
-          
-          # Copy all individual reports if they exist
+
+          # Chrome
+          mkdir -p results/browser-reports/chrome/screenshots
           [ -f logs/chrome/report.html ] && cp logs/chrome/report.html results/browser-reports/chrome/ || echo "No Chrome report"
           [ -f logs/chrome/log.html ] && cp logs/chrome/log.html results/browser-reports/chrome/ || echo "No Chrome log"
+          if compgen -G "logs/chrome/screenshots/*.png" > /dev/null; then
+            cp logs/chrome/screenshots/*.png results/browser-reports/chrome/screenshots/
+          else
+            echo "No Chrome screenshots"
+          fi
+
+          # Firefox
+          mkdir -p results/browser-reports/firefox/screenshots
           [ -f logs/firefox/report.html ] && cp logs/firefox/report.html results/browser-reports/firefox/ || echo "No Firefox report"
           [ -f logs/firefox/log.html ] && cp logs/firefox/log.html results/browser-reports/firefox/ || echo "No Firefox log"
+          if compgen -G "logs/firefox/screenshots/*.png" > /dev/null; then
+            cp logs/firefox/screenshots/*.png results/browser-reports/firefox/screenshots/
+          else
+            echo "No Firefox screenshots"
+          fi
+
+          # Safari
+          mkdir -p results/browser-reports/safari/screenshots
           [ -f logs/safari/report.html ] && cp logs/safari/report.html results/browser-reports/safari/ || echo "No Safari report"
           [ -f logs/safari/log.html ] && cp logs/safari/log.html results/browser-reports/safari/ || echo "No Safari log"
+          if compgen -G "logs/safari/screenshots/*.png" > /dev/null; then
+            cp logs/safari/screenshots/*.png results/browser-reports/safari/screenshots/
+          else
+            echo "No Safari screenshots"
+          fi
+
 
       - name: Check quality gate
         run: |
