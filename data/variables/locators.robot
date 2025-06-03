@@ -1,6 +1,6 @@
 *** Variables ***
 # homepage
-${home_header}=                xpath=//h1[text()='Home is just a search away.']
+${home_header}=                xpath=//h1[text()='Your Philippine Dream Home Awaits']
 ${header_login_btn}=                  xpath=(//*[text()='Login'])[1]
 
 
@@ -45,7 +45,7 @@ ${bahai_logo}=                xpath=//*[@id="root"]/div/div/main/div[1]/div[1]/a
 # reservation page
 ${properties_nav}=             xpath=(//*[text()='Properties'])[1]
 ${property}=                   xpath=(//*[text()='View Details'])[1]
-${reserve_btn}=                 xpath=//*[text()='Reserve Now (5% Down)']
+${reserve_btn}=                 xpath=//*[text()='Reserve Now']
 ${consent_checkbox}=            id=terms
 ${consent_modal}=               xpath=//*[text()='Payment Terms and Conditions']
 ${back_btn}=                    xpath=//*[text()='Back to Property']

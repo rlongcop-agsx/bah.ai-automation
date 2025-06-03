@@ -7,3 +7,4 @@ google-api-python-client
 beautifulsoup4
 robotframework-databaselibrary 
 psycopg2-binary
+robotframework-autorecorder

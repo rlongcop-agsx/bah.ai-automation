@@ -80,7 +80,9 @@ Test Case 6: Validate that the user can login successfully.
     bahai_app.Enter credential              ${login_password_field}    
     ...                                     ${PASSWORD}
     bahai_app.Click button                  ${login_btn}
-    bahai_app.Verify element displayed      ${profile_icon}
+    ${msg}=    Run Keyword And Ignore Error    bahai_app.Verify element displayed    ${profile_icon}
+    Run Keyword If    '${msg[0]}' == 'FAIL'    Fail    FAILED: Login failed.
+
     
 Test Case 7: Verify that the user remains signed in after closing and reopening the tab.
     [Documentation]    The user should remain signed in upon returning to the app.
@@ -93,9 +95,14 @@ Test Case 7: Verify that the user remains signed in after closing and reopening 
     bahai_app.Enter credential              ${login_password_field}
     ...                                     ${PASSWORD}
     bahai_app.Click button                  ${login_btn}
-    bahai_app.Verify element displayed      ${profile_icon}
+    ${msg}=    Run Keyword And Ignore Error    bahai_app.Verify element displayed    ${profile_icon}
+    Run Keyword If    '${msg[0]}' == 'FAIL'    Fail    FAILED: Login failed.
+
     bahai_app.Reopen Bahai website          ${LOGIN_PAGE}
     ...                                     ${login_form}
+    ${msg}=    Run Keyword And Ignore Error    bahai_app.Verify element displayed    ${profile_icon}
+    Run Keyword If    '${msg[0]}' == 'FAIL'    Fail    FAILED: Login failed.
+    
     bahai_app.Click button                  ${profile_icon}
     bahai_app.Validate text displayed       ${EMAIL}
 
@@ -110,8 +117,13 @@ Test Case 8: Verify that the user remains signed in after refreshing the page.
     bahai_app.Enter credential              ${login_password_field}
     ...                                     ${PASSWORD}
     bahai_app.Click button                  ${login_btn}
-    bahai_app.Verify element displayed      ${profile_icon}
+    ${msg}=    Run Keyword And Ignore Error    bahai_app.Verify element displayed    ${profile_icon}
+    Run Keyword If    '${msg[0]}' == 'FAIL'    Fail    FAILED: Login failed.
+
     Reload Page
+    ${msg}=    Run Keyword And Ignore Error    bahai_app.Verify element displayed    ${profile_icon}
+    Run Keyword If    '${msg[0]}' == 'FAIL'    Fail    FAILED: Login failed.
+    
     bahai_app.Click button                  ${profile_icon}
     bahai_app.Validate text displayed       ${EMAIL}
 

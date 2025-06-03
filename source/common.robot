@@ -18,7 +18,7 @@ Main Web Setup
     END
 
     Create Directory    logs/${dir}/screenshots
-    Empty Directory     logs/${dir}/screenshots
+    # Empty Directory     logs/${dir}/screenshots
     SeleniumLibrary.Set Screenshot Directory    logs/${dir}/screenshots
 
     Open Browser        about:blank    ${browser}

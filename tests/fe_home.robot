@@ -19,7 +19,8 @@ Test Case 1: Verify that the user can access the home page via URL.
     ...                HP-TC-001
     bahai_app.Navigate to the home page    ${HOME_PAGE}/    
     ...                                    ${home_header}
-    Validate text displayed                Home is just a search away.
+    Sleep    2s
+    Validate text displayed                Your Philippine Dream Home Awaits
 
 Test Case 2: Verify that the user can access the home page by clicking the bahai logo.
     [Documentation]    The home page should be displayed;

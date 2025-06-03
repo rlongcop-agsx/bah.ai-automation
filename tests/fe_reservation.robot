@@ -398,9 +398,9 @@ Test Case 29: Verify that the user is navigated to the Stripe's Consumer Terms o
 
 Test Case 30: Verify that the user is navigated to the Stripe's Privacy Policy page.
     [Documentation]    The user should be navigated to the Stripe's Privacy Policy page.
-    [Tags]    RP-TC-027    
-    ...       credit/debit    
-    ...       reserve
+    [Tags]                                  RP-TC-027    
+    ...                                     credit/debit    
+    ...                                     reserve
     Login to Bahai App
     bahai_app.Click button                  ${properties_nav}
     bahai_app.Click a Property              3BR Unit at The Trion Towers

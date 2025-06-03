@@ -160,6 +160,12 @@ Delete registered user
     ...                                                  ${DB_HOST}    
     ...                                                  ${DB_PORT}
     
+    psql_script.Delete User in Customer Scheduled Viewings       ${DB_NAME}    
+    ...                                                  ${DB_USER}    
+    ...                                                  ${DB_PASSWORD}    
+    ...                                                  ${DB_HOST}    
+    ...                                                  ${DB_PORT}
+    
     psql_script.Delete User in Customers                 ${DB_NAME}    
     ...                                                  ${DB_USER}    
     ...                                                  ${DB_PASSWORD}    
