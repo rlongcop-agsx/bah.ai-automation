@@ -73,5 +73,6 @@ Page Location Should Contain
 Switch to new tab
     [Arguments]                          ${url}
     Switch Window                        NEW
-    Location Should Be                   ${url}
+    Wait Until Keyword Succeeds    10    1s    Location Should Be                   ${url}
+    
 

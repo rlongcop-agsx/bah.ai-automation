@@ -98,8 +98,9 @@ Test Case 7: Verify that the user remains signed in after closing and reopening 
     ${msg}=    Run Keyword And Ignore Error    bahai_app.Verify element displayed    ${profile_icon}
     Run Keyword If    '${msg[0]}' == 'FAIL'    Fail    FAILED: Login failed.
 
-    bahai_app.Reopen Bahai website          ${LOGIN_PAGE}
-    ...                                     ${login_form}
+    bahai_app.Reopen Bahai website          ${HOME_PAGE}
+    ...                                     ${home_header}
+
     ${msg}=    Run Keyword And Ignore Error    bahai_app.Verify element displayed    ${profile_icon}
     Run Keyword If    '${msg[0]}' == 'FAIL'    Fail    FAILED: Login failed.
     
