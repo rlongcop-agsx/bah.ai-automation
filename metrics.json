@@ -13,11 +13,11 @@
       "total": 63
     },
     "safari": {
-      "passed": 28,
-      "failed": 35,
-      "pass_rate": 44.44444444444444,
+      "passed": 27,
+      "failed": 36,
+      "pass_rate": 42.857142857142854,
       "total": 63
     }
   },
-  "last_updated": "2025-07-15T08:37:37Z"
+  "last_updated": "2025-07-15T08:37:52Z"
 }
